@@ -1,28 +1,69 @@
-gulp_plugin
-===========
+## gulp-make-css-url-version
 
-plugins for gulp.js
+a plugin for gulp.js to replace version for images in css files,the version should be file's md5 or time stamp;
 
-###gulp-minify-inline-scripts
+## Installation
 
-minify inline scripts in html file
+```bash
+npm install gulp-make-css-url-version
+```
 
-###gulp-make-css-url-version
+## Usage
 
-replace version for images in css files
+```js
+var makeUrlVer = require('gulp-make-css-url-version');
 
-###gulp-utf8-convert
+gulp.task('stylesheets', function() {
+    gulp.src('css/*.css')
+        .pipe(makeUrlVer())
+        .pipe(gulp.dest('dist'))
+});
+```
 
-convert file encoding to utf8
+## Options
 
-###gulp-require-tpl2js
+useDate :make version with time stamp
 
-convert tpl files content to js for requirejs
+```js
+var makeUrlVer = require('gulp-make-css-url-version');
 
-###gulp-content-includer
+gulp.task('stylesheets', function() {
+    gulp.src('css/*.css')
+        .pipe(makeUrlVer({useDate:true}))
+        .pipe(gulp.dest('dist'))
+});
+```
 
-include files
+assetsDir: specify the public directory for correct MD5 calculation in some specific cases
 
-###gulp-asset-rev
+```js
+var makeUrlVer = require('gulp-make-css-url-version');
 
-replace asset's filename by adding file hash
+gulp.task('stylesheets', function() {
+    gulp.src('css/*.css')
+        .pipe(makeUrlVer({
+            assetsDir: __dirname + '/public'
+        }))
+        .pipe(gulp.dest('dist'))
+});
+```
+
+## Example
+
+### before: index.css
+
+```css
+/* loading */
+.i-loading{width:32px;height:32px;background:url(../images/loading.gif) no-repeat;}    
+```
+
+### after: index.css
+
+```css
+/* loading */
+.i-loading{width:32px;height:32px;background:url(../images/loading.gif?v=Je0sUcMH0mhJPWdZdpHzXg%3D%3D) no-repeat}
+
+```
+
+
+
